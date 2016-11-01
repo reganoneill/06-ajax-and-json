@@ -59,8 +59,8 @@ Article.fetchAll = function() {
       1.c And then render the index page.*/
 //DONE!
     $.getJSON('/data/blogArticles.json', function(data){
-      Article.loadAll(data);
       localStorage.blogArticles=JSON.stringify(data);
+      Article.loadAll(data);
       articleView.renderIndexPage();
       console.log('else is running');
     });
@@ -71,14 +71,41 @@ Article.fetchAll = function() {
 
 /* Great work so far! STRETCH GOAL TIME!? Our main goal in this part of the
    lab will be saving the eTag located in Headers, to see if it's been updated:
-
-  Article.fetchAll = function() {
-    if (localStorage.hackerIpsum) {
-       Let's make a request to get the eTag (hint: what method on which
-        object could we use to find the eTag?
-
-    } else {}
-  }
 */
+
+// Article.fetchAll = function() {
+//   if (localStorage.hackerIpsum) {
+//       //  Let's make a request to get the eTag (hint: what method on which
+//       //   object could we use to find the eTag?
+//
+//
+// };
+
+var newRequest = new XMLHttpRequest();
+newRequest.open('HEAD', 'INDEX.HTML', true);
+newRequest.send();
+newRequest.onreadystatechange = function() {
+  if(newRequest.readyState === 4) {
+    // function(data, message, newRequest) { console.log(newRequest); }
+    var eTag = newRequest.getResponseHeader('eTag');
+    localStorage.setItem('eTag', eTag);
+    console.log(eTag + ' is the ETag');
+  } else {
+    console.log('does this really need to be here? seems like it runs no matter what...');
+  }
+};
+
+//below is absolutely disgusting...i was trying to use the $.ajax() but it exploded
+// var dadada = localStorage.blogArticles;
+// $.ajax('index.html',{
+//
+//   type: 'HEAD',
+//   dataType : "json",
+//   data : JSON.parse(dadada),
+//   success : function(dada, jqXHR) {
+//     console.log(data);
+//   }
+// };
+//});
 
 // Article.fetchAll();
