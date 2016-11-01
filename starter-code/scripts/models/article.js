@@ -66,13 +66,9 @@ Article.fetchAll = function() {
     });
   }
 };
-
-
-
 /* Great work so far! STRETCH GOAL TIME!? Our main goal in this part of the
    lab will be saving the eTag located in Headers, to see if it's been updated:
 */
-
 // Article.fetchAll = function() {
 //   if (localStorage.hackerIpsum) {
 //       //  Let's make a request to get the eTag (hint: what method on which
@@ -87,9 +83,10 @@ newRequest.send();
 newRequest.onreadystatechange = function() {
   if(newRequest.readyState === 4) {
     // function(data, message, newRequest) { console.log(newRequest); }
+    // var allHeaders = newRequest.getAllResponseHeaders();
     var eTag = newRequest.getResponseHeader('eTag');
     localStorage.setItem('eTag', eTag);
-    console.log(eTag + ' is the ETag');
+    console.log(eTag + ' here is our eTag');
   } else {
     console.log('does this really need to be here? seems like it runs no matter what...');
   }
@@ -107,5 +104,3 @@ newRequest.onreadystatechange = function() {
 //   }
 // };
 //});
-
-// Article.fetchAll();
